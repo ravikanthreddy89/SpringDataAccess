@@ -1,7 +1,6 @@
 package org.javabrains.ravikanth.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,26 +8,23 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.javabrains.ravikanth.model.Circle;
-import org.springframework.stereotype.Component;
 
-public class JdbcDaoImpl {
-	
-	private DataSource dataSource;
-	
-	public JdbcDaoImpl(){
-		
-	}
-	
-	public DataSource getDataSource() {
-		return dataSource;
-	}
+public class JdbcDaoImplDbcp {
 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+private DataSource  dbcpDataSource;
+
+	public JdbcDaoImplDbcp(){
+				
+	}	
+
+	public DataSource getDbcpDataSource() {
+		return dbcpDataSource;
 	}
 
-	
-	
+	public void setDbcpDataSource(DataSource dbcpDataSource) {
+		this.dbcpDataSource = dbcpDataSource;
+	}
+
 	public Circle getCircle(int id){
 		Circle circle=null;
 		Connection con=null;
@@ -36,7 +32,7 @@ public class JdbcDaoImpl {
 		try{
 			
 			//get the connection
-			con=getDataSource().getConnection();
+			con=getDbcpDataSource().getConnection();
 			//Prepare the statement
 			PreparedStatement stmt=con.prepareStatement("select * from circle where id =?");
 			stmt.setInt(1, id);
