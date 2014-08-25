@@ -15,4 +15,7 @@
 			<property name="initialSize" value="2"/>
 </bean>
 
+<bean id="SimpleJdbcDaoImpl" class="org.javabrains.ravikanth.dao.SimpleJdbcDaoImpl">
+	<property name="dataSource" ref="dbcpDataSource"/>
+</bean>
 </beans>
