@@ -8,15 +8,26 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.javabrains.ravikanth.model.Circle;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class JdbcDaoImplDbcp {
 
-private DataSource  dbcpDataSource;
+	private JdbcTemplate jdbcTemplate;
+	private DataSource  dbcpDataSource;
 
 	public JdbcDaoImplDbcp(){
 				
 	}	
 
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	
 	public DataSource getDbcpDataSource() {
 		return dbcpDataSource;
 	}
@@ -66,4 +77,12 @@ private DataSource  dbcpDataSource;
 		return circle;
 	}
 
+	
+	public int getCircleCount(){
+		if(getJdbcTemplate()==null)setJdbcTemplate(new JdbcTemplate());		
+		getJdbcTemplate().setDataSource(dbcpDataSource);
+		
+		String sql="select count(*) from circle";
+		return getJdbcTemplate().queryForInt(sql);
+	}
 }
