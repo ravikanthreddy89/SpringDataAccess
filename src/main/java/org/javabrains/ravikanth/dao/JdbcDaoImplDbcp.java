@@ -85,4 +85,10 @@ public class JdbcDaoImplDbcp {
 		String sql="select count(*) from circle";
 		return getJdbcTemplate().queryForInt(sql);
 	}
+	
+	public String getCirlceName(int id){
+		getJdbcTemplate().setDataSource(dbcpDataSource);
+		String sql="select name from circle where id = ?";
+		return getJdbcTemplate().queryForObject(sql,new Object[] { id},  String.class);
+	}
 }

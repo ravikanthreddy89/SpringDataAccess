@@ -16,5 +16,7 @@ public class JdbcDemo {
 		
 		System.out.println("Circle name : "+circle.getName());
 		System.out.println("Number of circles : "+jdbcDaoImplDbcp.getCircleCount());
+		
+		System.out.println("Circle Name : "+jdbcDaoImplDbcp.getCirlceName(7));
 	}
 }
