@@ -23,6 +23,8 @@ public class JdbcDemo {
 		System.out.println("ID : "+c.getId());
 		System.out.println("Name : "+c.getName());
 		
+		jdbcDaoImplDbcp.insertCircle(new Circle(8, "Eigth Circle"));
+		jdbcDaoImplDbcp.createTriangle();
 		
 		System.out.println("Total number of circles : "+jdbcDaoImplDbcp.getAllCircles().size());
 	}

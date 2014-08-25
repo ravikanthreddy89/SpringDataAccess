@@ -107,6 +107,17 @@ public class JdbcDaoImplDbcp {
 	}
 	
 	
+	public void insertCircle(Circle c){
+		String sql="insert into circle values(?, ?)";
+		getJdbcTemplate().setDataSource(dbcpDataSource);
+		getJdbcTemplate().update(sql, new Object[] {c.getId(), c.getName()});
+	}
+	
+	public void createTriangle(){
+		String sql="create table triangle( id int , name varchar(20))";
+		getJdbcTemplate().execute(sql);
+	}
+	
 	private static final class CircleMapper implements RowMapper<Circle>{
 
 		public Circle mapRow(ResultSet resultSet, int rownum) throws SQLException {
