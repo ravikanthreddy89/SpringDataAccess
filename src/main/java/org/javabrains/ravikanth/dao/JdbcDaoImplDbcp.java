@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.javabrains.ravikanth.model.Circle;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 public class JdbcDaoImplDbcp {
 
@@ -90,5 +92,30 @@ public class JdbcDaoImplDbcp {
 		getJdbcTemplate().setDataSource(dbcpDataSource);
 		String sql="select name from circle where id = ?";
 		return getJdbcTemplate().queryForObject(sql,new Object[] { id},  String.class);
+	}
+	
+	public Circle getCircleWithMapper(int id){
+		getJdbcTemplate().setDataSource(dbcpDataSource);
+		String sql="select * from circle where id = ?";
+		return getJdbcTemplate().queryForObject(sql, new Object[] {id}, new CircleMapper());
+	}
+	
+	public List<Circle> getAllCircles(){
+		getJdbcTemplate().setDataSource(dbcpDataSource);
+		String sql="select * from circle";
+		return getJdbcTemplate().query(sql, new CircleMapper());
+	}
+	
+	
+	private static final class CircleMapper implements RowMapper<Circle>{
+
+		public Circle mapRow(ResultSet resultSet, int rownum) throws SQLException {
+			// TODO Auto-generated method stub
+			Circle circle = new Circle();
+			circle.setId(resultSet.getInt("id"));
+			circle.setName(resultSet.getString("name"));
+			return circle;
+		}
+		
 	}
 }
