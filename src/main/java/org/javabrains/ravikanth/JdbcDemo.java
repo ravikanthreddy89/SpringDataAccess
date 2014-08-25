@@ -24,7 +24,9 @@ public class JdbcDemo {
 		System.out.println("Name : "+c.getName());
 		
 		jdbcDaoImplDbcp.insertCircle(new Circle(8, "Eigth Circle"));
-		jdbcDaoImplDbcp.createTriangle();
+		//jdbcDaoImplDbcp.createTriangle();
+		
+		jdbcDaoImplDbcp.insertCircleNamedParameter(new Circle(9, "Ninth Circle"));
 		
 		System.out.println("Total number of circles : "+jdbcDaoImplDbcp.getAllCircles().size());
 	}

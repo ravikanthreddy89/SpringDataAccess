@@ -11,11 +11,15 @@ import javax.sql.DataSource;
 import org.javabrains.ravikanth.model.Circle;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 public class JdbcDaoImplDbcp {
 
 	private JdbcTemplate jdbcTemplate;
 	private DataSource  dbcpDataSource;
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	public JdbcDaoImplDbcp(){
 				
@@ -27,6 +31,7 @@ public class JdbcDaoImplDbcp {
 
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.namedParameterJdbcTemplate=new NamedParameterJdbcTemplate(dbcpDataSource);
 	}
 
 	
@@ -112,6 +117,14 @@ public class JdbcDaoImplDbcp {
 		getJdbcTemplate().setDataSource(dbcpDataSource);
 		getJdbcTemplate().update(sql, new Object[] {c.getId(), c.getName()});
 	}
+	
+	public void insertCircleNamedParameter(Circle c){
+		String sql="insert into circle values(:id, :name)";
+		SqlParameterSource sqlParameterSource=new MapSqlParameterSource("id", c.getId())
+		                                          .addValue("name", c.getName());
+		namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+	}
+	
 	
 	public void createTriangle(){
 		String sql="create table triangle( id int , name varchar(20))";
